@@ -1,0 +1,30 @@
+{
+  "name": "peppino",
+  "version": "0.0.1-dev",
+  "description": "node.js logger based on pino",
+  "main": "src/pepino.js",
+  "files": [
+    "src/"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "lint": "standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://simone-sanfratello@github.com/simone-sanfratello/peppino.git"
+  },
+  "keywords": [],
+  "author": "Simone Sanfratello <simone@braceslab.com>",
+  "license": "MIT",
+  "dependencies": {
+    "pino": "^6.2.1",
+    "pino-pretty": "^4.0.0"
+  },
+  "devDependencies": {
+    "standard": "^14.3.3"
+  }
+}
