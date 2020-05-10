@@ -8,7 +8,7 @@ node.js logger based on pino
 
 ## Purpose
 
-Have a ready-to-use rich tool for dev and debug with while use great [pino](https://github.com/pinojs) wonderful performace in production.
+Have a ready-to-use rich tool for dev and debug while use great [pino](https://github.com/pinojs) performace in production.
 
 ## Installing
 
