@@ -4,7 +4,7 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/peppino.svg?style=flat)](https://www.npmjs.org/package/peppino)
 [![JS Standard Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-node.js logger based on pino
+preset of pino
 
 ## Purpose
 
@@ -16,27 +16,23 @@ Have a ready-to-use rich tool for dev and debug while use great [pino](https://g
 npm i peppino
 ````
 
-### Quick start
-
-@todo
-
-## Features
-
-@todo
-
 ## Settings
 
 @todo
 
+singleton or instance
+level
+pretty
+version
+
 ## TODO
 
-- [ ] return singleton or new instance
 - [ ] settings: mode dev, test, prod
 - [ ] namespaces enable/disable
 - [ ] level enable/disable
 - [ ] level marker
 - [ ] full trace by `stack-trace`
-- [ ] timer (expire in settings)
+- [ ] timer (expiration in settings)
 
 ---
 
