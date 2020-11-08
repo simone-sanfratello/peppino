@@ -1,7 +1,9 @@
+'use strict'
+
 const tap = require('tap')
 const peppino = require('../src/peppino')
 
-const LEVELS = ['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']
+const LEVELS = ['panic', 'fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']
 
 tap.test('peppino.init default', test => {
   test.plan(1)
@@ -27,8 +29,8 @@ tap.test('peppino.init instance', test => {
   const _peppino1 = peppino.init({ singleton: false })
   _peppino1.fatal({ message: 'fatal' })
 
-  const _peppino2 = peppino.init({ singleton: false })
-  _peppino2.fatal({ message: 'fatal', error: new Error('PANIC!') })
+  const _peppino2 = peppino.init({ singleton: false, name: 'service-auth' })
+  _peppino2.panic({ message: 'cant start app', error: new Error('PANIC!') })
 
   test.pass()
 })
@@ -74,5 +76,4 @@ tap.test('levels', test => {
     _peppino[level]({ message: level })
     test.pass()
   }
-
 })

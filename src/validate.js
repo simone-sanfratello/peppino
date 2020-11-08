@@ -1,18 +1,26 @@
-const superstruct = require('superstruct')
+'use strict'
+
+const s = require('superstruct')
 const default_ = {
   level: 'warn',
   pretty: false,
   version: '',
+  name: '',
   singleton: true
 }
 
-const s = superstruct.struct
+const settings = s.defaulted(
+  s.object({
+    level: s.optional(s.enums(['debug', 'trace', 'info', 'warn', 'error', 'fatal', 'panic', 'silent'])),
+    pretty: s.optional(s.boolean()),
+    version: s.optional(s.string()),
+    name: s.optional(s.string()),
+    singleton: s.optional(s.boolean())
+  }), default_
+)
 
-const settings = s({
-  level: s.optional(s.enum(['debug', 'trace', 'info', 'warn', 'error', 'fatal', 'silent'])),
-  pretty: 'boolean?',
-  version: 'string?',
-  singleton: 'boolean?'
-}, default_)
+function validate (value) {
+  return s.coerce(value, settings)
+}
 
-module.exports = settings
+module.exports = validate

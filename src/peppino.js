@@ -3,7 +3,7 @@
 const pino = require('pino')
 const validate = require('./validate')
 
-const LEVELS = ['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']
+const LEVELS = ['panic', 'fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']
 
 let _singleton
 const _timers = {}
@@ -56,12 +56,21 @@ const log = {
   },
 
   set: function (settings = {}) {
+    console.log(settings)
     settings = validate(settings)
+    const base = {}
+    if (settings.version) {
+      base.version = settings.version
+    }
+    if (settings.name) {
+      base.name = settings.name
+    }
 
     const logger = pino({
       level: settings.level,
       prettyPrint: settings.pretty ? prettyOptions : false,
-      base: settings.version ? { version: settings.version } : {},
+      base,
+      customLevels: { panic: 90 },
       formatters: {
         level (label, _number) {
           return { level: label.toUpperCase() }
