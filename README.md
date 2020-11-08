@@ -47,6 +47,7 @@ Default settings:
   level: 'warn',
   pretty: false,
   version: '',
+  name: '',
   singleton: true
 }
 ```
@@ -57,6 +58,8 @@ Default settings:
   pretty output
 - version
   append version on each log entry
+- name
+  append instance name (usually service name) on each log entry
 - singleton
   use the singleton or create a new indipendent instance with different settings
 
