@@ -1,6 +1,6 @@
 {
   "name": "peppino",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "node.js logger based on pino",
   "main": "src/peppino.js",
   "files": [

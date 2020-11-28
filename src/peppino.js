@@ -12,7 +12,7 @@ const prettyOptions = {
   messageKey: 'message',
   customPrettifiers: {
     error: error => {
-      const stack = error.stack.split(',').splice(1).map((line) => '\n    ' + line.trim()).join('')
+      const stack = error.stack.split(',').map((line) => '\n    ' + line.trim()).join('')
       return '\n  message: ' + error.message + '\n  stack: ' + stack
     }
   }
