@@ -56,7 +56,6 @@ const log = {
   },
 
   set: function (settings = {}) {
-    console.log(settings)
     settings = validate(settings)
     const base = {}
     if (settings.version) {
