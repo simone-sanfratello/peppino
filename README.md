@@ -8,7 +8,7 @@ preset of pino
 
 ## Purpose
 
-Have a ready-to-use rich tool for dev and debug while use great [pino](https://github.com/pinojs) performace in production.
+Ready-to-use rich tool for dev and debug while relay on [pino](https://github.com/pinojs) great performace in production.
 
 ## Installing
 
@@ -32,7 +32,7 @@ singleton
 ```js
 const log = require('peppino')
 const _logger1 = log.init({ singleton: false, level: 'info' })
-const _logger2 = log.init({ singleton: false, level: 'silent' })
+const _logger2 = log.init({ singleton: false, pretty: true, level: 'silent' })
 
 _logger1.info({ message: 'info' })
 _logger2.info({ message: 'none' })
@@ -48,20 +48,27 @@ Default settings:
   pretty: false,
   version: '',
   name: '',
+  namespaces: {
+    filter: null
+  },
   singleton: true
 }
 ```
 
-- level
-  set logger level: one
-- pretty
+- **level**
+  set logger level
+- **pretty**
   pretty output
-- version
+- **version**
   append version on each log entry
-- name
+- **name**
   append instance name (usually service name) on each log entry
-- singleton
+- **singleton**
   use the singleton or create a new indipendent instance with different settings
+- **original**
+  append original [pino options](https://github.com/pinojs/pino/blob/master/docs/api.md#options)
+- **namespaces**
+  use namespaces and apply filter on `pretty`
 
 ## Methods
 
@@ -88,9 +95,11 @@ log.info({ message: 'query execution', time: log.timer('db-query') })
 
 > {"level":"INFO","time":1591218836285,"message":"query execution","timer":"123 ms"}
 
+NOTE: max timer duration in 10 minutes, if `timer` is not called the second time with the same tag, it is automatically cleaned after 10 mins.
+
 ### .pino
 
-you may need the pino original instance with current settings
+you may need the pino original instance with current settings, i.e. to pass to `fastify`
 
 ```js
 const log = require('peppino')
@@ -99,14 +108,61 @@ log.init()
 const pino = log.pino()
 ```
 
+---
+
+### Namespaces
+
+Use namespaces and apply filter; filter can be: `string` or `string[]` or `RegExp`.  
+Only for pretty print
+
+```js
+const log = require('peppino')
+log.init({
+  pretty: true,
+  level: 'info',
+  name: 'auth-service',
+  namespaces: { filter: ['db'] }
+})
+
+// will be printed
+log.success({ ns: 'db', message: 'connected' })
+
+// will be skipped
+log.error({
+  ns: 'socket',
+  message: 'connection timeout',
+  socket: { address: '192.168.100.123', port: 9909 }
+})
+```
+
+---
+
+### Levels
+
+`panic`, `success` and `fail` are added to the original levels.
+
+Full ordered set is: 
+- `panic`
+- `fatal`
+- `error`
+- `warn`
+- `success`
+- `fail`
+- `info`
+- `debug`
+- `trace`  
+
+or  
+
+`silent`
+
+---
+
 ## TODO
 
-- [ ] settings: mode dev, test, prod
-- [ ] namespaces enable/disable
-- [ ] level enable/disable
-- [ ] level marker
+- [ ] test coverage
 - [ ] full trace by `stack-trace`
-- [ ] timer (expiration in settings)
+- [ ] custom serializers
 
 ---
 
