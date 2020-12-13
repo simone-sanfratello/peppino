@@ -3,7 +3,7 @@
 const tap = require('tap')
 const peppino = require('../src/peppino')
 
-const LEVELS = ['panic', 'fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']
+const LEVELS = ['panic', 'fatal', 'error', 'warn', 'success', 'fail', 'info', 'debug', 'trace', 'silent']
 
 tap.test('peppino.init default', test => {
   test.plan(1)
@@ -46,17 +46,10 @@ tap.test('peppino.set', test => {
 })
 
 tap.test('peppino.timer', test => {
-  test.plan(1)
+  test.plan(2)
 
-  peppino.timer('tag')
-
+  test.equal(peppino.timer('tag'), 'tag chrono start')
   test.match(peppino.timer('tag'), /\d+ ms/)
-})
-
-tap.test('peppino.pino', test => {
-  test.plan(1)
-
-  test.pass()
 })
 
 tap.test('peppino.pino', test => {
@@ -64,6 +57,15 @@ tap.test('peppino.pino', test => {
 
   peppino.set({ pretty: false })
   peppino.pino().error({ message: 'error', error: new Error('A_ERROR') })
+
+  test.pass()
+})
+
+tap.test('peppino options', test => {
+  test.plan(1)
+
+  const _peppino = peppino.init({ singleton: false, pretty: false, name: 'auth-service', version: '0.0.1' })
+  _peppino.error({ message: 'welcome' })
 
   test.pass()
 })
@@ -77,3 +79,69 @@ tap.test('levels', test => {
     test.pass()
   }
 })
+
+tap.test('namespace string', test => {
+  test.plan(1)
+
+  const _peppino = peppino.init({
+    singleton: false,
+    pretty: true,
+    level: 'info',
+    name: 'auth-service',
+    namespaces: { filter: 'db' }
+  })
+  _peppino.success({ ns: 'db', message: 'connected' })
+  _peppino.error({
+    ns: 'socket',
+    message: 'connection timeout',
+    socket: { address: '192.168.100.123', port: 9909 }
+  })
+
+  test.pass()
+})
+
+tap.test('namespace array', test => {
+  test.plan(1)
+
+  const _peppino = peppino.init({
+    singleton: false,
+    pretty: true,
+    level: 'info',
+    name: 'auth-service',
+    namespaces: { filter: ['db'] }
+  })
+  _peppino.success({ ns: 'db', message: 'connected' })
+  _peppino.error({
+    ns: 'socket',
+    message: 'connection timeout',
+    socket: { address: '192.168.100.123', port: 9909 }
+  })
+
+  test.pass()
+})
+
+tap.test('namespace regexp', test => {
+  test.plan(1)
+
+  const _peppino = peppino.init({
+    singleton: false,
+    pretty: true,
+    level: 'info',
+    name: 'auth-service',
+    namespaces: { filter: /db/ }
+  })
+  _peppino.success({ ns: 'db', message: 'connected' })
+  _peppino.error({
+    ns: 'socket',
+    message: 'connection timeout',
+    socket: { address: '192.168.100.123', port: 9909 }
+  })
+
+  test.pass()
+})
+
+/*
+
+@todo
+peppino.original
+*/
