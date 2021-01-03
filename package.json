@@ -1,6 +1,6 @@
 {
   "name": "peppino",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "node.js logger based on pino",
   "main": "src/peppino.js",
   "files": [
@@ -10,6 +10,7 @@
     "node": ">=12"
   },
   "dependencies": {
+    "a-toolbox": "^1.7.3",
     "chalk": "^4.1.0",
     "json-stringify-extended": "^2.2.1",
     "pino": "^6.8.0",

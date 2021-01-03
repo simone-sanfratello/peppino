@@ -10,6 +10,7 @@ const default_ = {
     filter: null
   },
   singleton: true,
+  formatters: {},
   markers: {
     debug: '🐞',
     trace: '💬',
@@ -67,7 +68,8 @@ const settings = s.defaulted(
       success: s.optional(s.string()),
       fail: s.optional(s.string())
     })),
-    original: s.optional(s.object())
+    original: s.optional(s.object()),
+    formatters: s.optional(s.object())
   }), default_
 )
 

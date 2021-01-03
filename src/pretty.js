@@ -3,17 +3,26 @@
 const { Transform } = require('stream')
 const chalk = require('chalk')
 const jstringify = require('json-stringify-extended')
+const toolbox = require('a-toolbox')
 const util = require('./util')
+let formatters = require('./formatters')
 
 const STRINGIFY_OPTIONS = {
   keySpace: true,
   safe: true,
   replace: function (key, value) {
+    let format
     if (key === 'error' || value instanceof Error) {
       // nb already serialized by pino
       const stack = value.stack.split(',')
         .map(line => `\n    > ${line}`).join('')
       return { key, value: { ...value, stack } }
+    } else if (key && toolbox.util.isSet(value) && (format = key.indexOf(':')) > 1) {
+      const formatter = key.substr(format + 1)
+      let f
+      if ((f = formatters[formatter])) {
+        return { key: key.substr(0, format), value: f(value) }
+      }
     }
     return { key, value }
   }
@@ -35,6 +44,12 @@ function stringify (payload) {
 const pretty = {
   output: function prettyOutput (settings) {
     const filter = settings.namespaces?.filter
+    if (settings.formatters) {
+      formatters = {
+        ...formatters,
+        ...settings.formatters
+      }
+    }
     return new Transform({
       defaultEncoding: 'utf8',
       transform (chunk, _encoding, callback) {

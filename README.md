@@ -22,21 +22,29 @@ singleton
 
 ```js
 const log = require('peppino')
-log.init()
+log.init({ pretty: true })
 
 log.warn({ message: 'info' })
 ```
 
-singleton
+output
+
+![basic singleton](./doc/img/basic-singleton.png)
+
+multiple instances
 
 ```js
 const log = require('peppino')
-const _logger1 = log.init({ singleton: false, level: 'info' })
-const _logger2 = log.init({ singleton: false, pretty: true, level: 'silent' })
+const _logger1 = log.init({ singleton: false, pretty: true, level: 'info' })
+const _logger2 = log.init({ singleton: false, level: 'silent' })
 
 _logger1.info({ message: 'info' })
 _logger2.info({ message: 'none' })
 ```
+
+output
+
+![basic multiple instances](./doc/img/basic-multiple.png)
 
 ## Settings
 
@@ -51,7 +59,8 @@ Default settings:
   namespaces: {
     filter: null
   },
-  singleton: true
+  singleton: true,
+  original: null
 }
 ```
 
@@ -63,12 +72,12 @@ Default settings:
   append version on each log entry
 - **name**
   append instance name (usually service name) on each log entry
+- **namespaces**
+  use namespaces and apply filter on `pretty`
 - **singleton**
   use the singleton or create a new indipendent instance with different settings
 - **original**
   append original [pino options](https://github.com/pinojs/pino/blob/master/docs/api.md#options)
-- **namespaces**
-  use namespaces and apply filter on `pretty`
 
 ## Methods
 
@@ -158,9 +167,46 @@ or
 
 ---
 
+### Formatters
+
+Specify how to format keys adding the formatter to log entries keys
+
+```js
+log.error({
+  ns: 'socket',
+  message: 'connection timeout',
+  'timestamp:epoch': Date.now()
+})
+```
+
+output
+
+![use formatters](./doc/img/use-formatters.png)
+
+Available formatters are:
+
+- `epoch`: format epoch time to ISO
+- `filesize`: format bytes to human readable
+
+Formatters can be customized or extended as follow
+
+```js
+log.init({
+  formatters: {
+    // override default "epoch" formatter
+    epoch: value => new Date(value).toLocaleString(),
+    // add formatter for file name to print only the filename
+    filename: value => path.basename(value)
+  }
+})
+```
+
+---
+
 ## TODO
 
 - [ ] test coverage
+  - [ ] test formatters
 - [ ] full trace by `stack-trace`
 - [ ] custom serializers
 
