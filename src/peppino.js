@@ -70,9 +70,11 @@ const log = {
       return
     }
     _singleton = log.set(settings)
+
     for (const level of LEVELS) {
       log[level] = _singleton[level].bind(_singleton)
     }
+    log.printing = _singleton.isLevelEnabled.bind(_singleton)
     return log
   },
 

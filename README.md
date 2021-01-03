@@ -76,6 +76,8 @@ Default settings:
   use namespaces and apply filter on `pretty`
 - **singleton**
   use the singleton or create a new indipendent instance with different settings
+- **formatters**
+  customize formatters, see [#formatters](formatter section).
 - **original**
   append original [pino options](https://github.com/pinojs/pino/blob/master/docs/api.md#options)
 
@@ -88,6 +90,20 @@ init logger with settings, everything is optional
 ### .set
 
 update settings for the singleton or existing instance
+
+### .printing
+
+says if level is enabled or not
+
+```js
+const log = require('peppino')
+log.init({ level: 'warn' })
+log.printing('info')
+// > false
+
+log.printing('error')
+// > true
+```
 
 ### .timer
 
@@ -169,13 +185,14 @@ or
 
 ### Formatters
 
-Specify how to format keys adding the formatter to log entries keys
+Specify how to format entries adding the formatter to keys
 
 ```js
 log.error({
   ns: 'socket',
   message: 'connection timeout',
-  'timestamp:epoch': Date.now()
+  timestamp: Date.now(),
+  'now:epoch': Date.now()
 })
 ```
 
@@ -206,7 +223,8 @@ log.init({
 ## TODO
 
 - [ ] test coverage
-  - [ ] test formatters
+  - [ ] formatters
+  - [ ] printing
 - [ ] full trace by `stack-trace`
 - [ ] custom serializers
 
