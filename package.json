@@ -1,6 +1,6 @@
 {
   "name": "peppino",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "node.js logger based on pino",
   "main": "src/peppino.js",
   "files": [
@@ -15,7 +15,7 @@
     "json-stringify-extended": "^2.2.1",
     "pino": "^6.8.0",
     "pino-pretty": "^4.3.0",
-    "superstruct": "^0.10.13"
+    "superstruct": "0.10.13"
   },
   "devDependencies": {
     "pre-commit": "^1.2.2",

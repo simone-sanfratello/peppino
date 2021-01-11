@@ -10,6 +10,11 @@ preset of pino
 
 Ready-to-use rich tool for dev and debug while relay on [pino](https://github.com/pinojs) great performace in production.
 
+Key features:
+
+- namespaces and filter logs by namespaces
+- 
+
 ## Installing
 
 ````bash

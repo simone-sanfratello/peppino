@@ -1,11 +1,8 @@
 'use strict'
 
-const log = require('../src/peppino')
+const log = require('peppino')
 log.init({ pretty: true })
 
-log.error({
-  ns: 'socket',
-  message: 'connection timeout',
-  timestamp: Date.now(),
-  'now:epoch': Date.now()
-})
+log.error({ message: 'connection timeout', 'timestamp:epoch': Date.now(), ns: 'socket' })
+
+log.warn({ message: 'file saved', 'size:filesize': 1024 * 1024, ns: 'file-server' })
