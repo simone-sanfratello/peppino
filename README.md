@@ -13,7 +13,7 @@ Ready-to-use rich tool for dev and debug while relay on [pino](https://github.co
 Key features:
 
 - namespaces and filter logs by namespaces
-- 
+- pretty formatters
 
 ## Installing
 
