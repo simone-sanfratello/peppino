@@ -29,7 +29,8 @@ singleton
 const log = require('peppino')
 log.init({ pretty: true })
 
-log.warn({ message: 'info' })
+log.info({ message: 'order received', payload: { order: { id: '1123abc', items: ['pizza','beer','rum'] } } })
+log.error({ message: 'oh no!', error: new Error('SOMETHING_WRONG') })
 ```
 
 output
