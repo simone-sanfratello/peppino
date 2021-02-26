@@ -43,7 +43,7 @@ function stringify (payload) {
 
 const pretty = {
   output: function prettyOutput (settings) {
-    const filter = settings.namespaces?.filter
+    const filter = settings.namespaces && settings.namespaces.filter
     if (settings.formatters) {
       formatters = {
         ...formatters,

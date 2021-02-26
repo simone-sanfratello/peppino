@@ -1,20 +1,20 @@
 {
   "name": "peppino",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "node.js logger based on pino",
   "main": "src/peppino.js",
   "files": [
     "src/"
   ],
   "engines": {
-    "node": ">=12"
+    "node": ">=10"
   },
   "dependencies": {
     "a-toolbox": "^1.7.3",
     "chalk": "^4.1.0",
     "json-stringify-extended": "^2.2.1",
-    "pino": "^6.8.0",
-    "pino-pretty": "^4.3.0",
+    "pino": "^6.11.1",
+    "pino-pretty": "^4.5.0",
     "superstruct": "0.10.13"
   },
   "devDependencies": {
